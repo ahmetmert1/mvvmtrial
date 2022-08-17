@@ -9,7 +9,8 @@ import Foundation
 
 protocol DataListManagerProtocol {
     
-    func fetchPokemonList() async throws     -> [PokemonEntry]
+    var pokemons : [PokemonEntry] {get set}
+    func fetchPokemonList()
     
 }
 
@@ -18,6 +19,7 @@ class DataListManager : ObservableObject {
     
     static let shared : DataListManagerProtocol = DataListManager()
     @Published  var pokemonsManager : [PokemonEntry] = []
+    @Published  var pokemons : [PokemonEntry] = []
     private var offset = 0
     private init (){
         
@@ -29,7 +31,8 @@ class DataListManager : ObservableObject {
 
 extension DataListManager : DataListManagerProtocol {
     
-    func fetchPokemonList() -> [PokemonEntry] {
+    
+    func fetchPokemonList() {
         
         print("Data Manager içi veri cekme")
         
@@ -59,11 +62,14 @@ extension DataListManager : DataListManagerProtocol {
                     
                     
                     self.pokemonsManager = oldData + jsonData.results
+                    self.pokemons = oldData + jsonData.results
                     
                     self.offset += 20
                     print("Manager içi offset altı : ")
                     print(self.pokemonsManager)
                     print(self.offset)
+                    
+                    
                     
                 }catch{
                     print("Error")
@@ -71,7 +77,7 @@ extension DataListManager : DataListManagerProtocol {
                 }
             }
         }.resume()
-        return pokemonsManager
+       // return await pokemonsManager
     }
 }
 

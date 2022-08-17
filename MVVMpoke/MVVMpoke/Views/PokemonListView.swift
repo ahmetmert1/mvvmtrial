@@ -15,6 +15,14 @@ struct PokemonListView: View {
         
 
         Text("Umarım olur")
+            .onAppear(){
+                print("istek yapıldı")
+                viewModel.fetchPokemons()
+                print("Devamı")
+                print(viewModel.pokemons)
+                
+                
+            }
     }
 }
 

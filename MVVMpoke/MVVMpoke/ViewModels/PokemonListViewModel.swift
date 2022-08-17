@@ -13,7 +13,7 @@ protocol PokemonListViewModelProtocol {
     
     var pokemons : [PokemonEntry] {get set}
     
-    func fetchPokemons() -> [PokemonEntry]
+    func fetchPokemons()
     
     
 }
@@ -33,11 +33,12 @@ class PokemonListViewModel : ObservableObject {
 
 extension PokemonListViewModel : PokemonListViewModelProtocol {
    
-    func fetchPokemons() -> [PokemonEntry] {
+    func fetchPokemons() {
        
-       pokemons = dataListManager.fetchPokemonList()
+        dataListManager.fetchPokemonList()
+        pokemons = dataListManager.pokemons
         
-        return pokemons
+        
         
         
     }
